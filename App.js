@@ -4,6 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+// import { db } from './firebase'
+// import { collection, deleteDoc, doc, getDoc, setDoc, addDoc } from 'firebase/firestore';
 
 import HomeScreen from './pages/HomeScreen';
 import AddTaskScreen from './pages/AddTaskScreen';
@@ -50,7 +53,35 @@ function HomeTabs() {
 }
 
 function App() {
+
+  // const Create = () => {
+
+  //   // MARK: Creating New Doc in Firebase
+  //   // Before that enable Firebase in Firebase Console
+  //   const myDoc = doc(db, "MyCollection", "MyDocument")
+
+  //   // Your Document Goes Here
+  //   const docData = {
+  //     "name": "iJustine",
+  //     "bio": "YouTuber"
+  //   }
+
+  //   setDoc(myDoc, docData)
+  //     // Handling Promises
+  //     .then(() => {
+  //       // MARK: Success
+  //       alert("Document Created!")
+  //     })
+  //     .catch((error) => {
+  //       // MARK: Failure
+  //       alert(error.message)
+  //     })
+  // }
+
   return (
+    // <View style={styles.container}>
+    //   <Button title='Create New Doc' onPress={Create}></Button>
+    // </View>
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Feed"
@@ -88,5 +119,14 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default App;
