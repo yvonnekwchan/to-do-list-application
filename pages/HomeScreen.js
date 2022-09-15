@@ -383,7 +383,7 @@ const HomeScreen = ({ navigation }) => {
 
       /*Update nextWeekTaskItems array*/
       if (schedule == nextWeek) {
-        const id = tomorrowTaskItems.length + 1;
+        const id = nextWeekTaskItems.length + 1;
         const newTask = {
           id: id,
           taskName: task,
