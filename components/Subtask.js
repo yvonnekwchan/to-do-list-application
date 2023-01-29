@@ -32,6 +32,10 @@ const Subtask = (props) => {
         props.updateSubtaskStatus(isCompleted, props.index);
     }
 
+    const handleDeleteSubtask = () => {
+        props.deleteSubtask(props.index);
+    }
+
     const handleOnBlur = () => {
         //console.log("inputText onblur " + inputText);
         if (inputText == null || inputText.trim() === '') {
@@ -59,7 +63,11 @@ const Subtask = (props) => {
                 }
             </TouchableOpacity>
             {isCompleted == true &&
-                <Text style={styles.addStrike}>{props.isOnEditPage == false ? inputText : props.text}</Text>
+                <View style={{width: '83%'}}>
+                    <Text>{props.isOnEditPage == false ? inputText : props.text}</Text>
+                    <View style={styles.halfLine}>
+                    </View>
+                </View>
             }
             {/* <Text>{props.value}</Text>
             <Text>default text: {props.text}; </Text>
@@ -67,7 +75,7 @@ const Subtask = (props) => {
             <Text>isInputFocused: {isInputFocused.toString()}</Text> */}
             {isCompleted != true &&
                 <TextInput
-                    style={styles.textInput}
+                    style={styles.textInputWrapper}
                     ref={inputRef}
                     onFocus={handleInputFocus}
                     value={inputText}
@@ -79,11 +87,25 @@ const Subtask = (props) => {
                     onBlur={() => { handleInputBlur(); handleOnBlur(); }}
                 />
             }
+            <TouchableOpacity onPress={() => handleDeleteSubtask()}>
+                {isCompleted == true &&
+                    <Text style={styles.delete}><Ionicons name="close" size={18} color="#D89335" /></Text>
+                }
+            </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    halfLine: {
+        width: "95%",
+        top: 0,
+        height: "50%",
+        borderBottomColor: "#D89335",
+        borderBottomWidth: 1.3,
+        position: "absolute",
+        opacity: 0.5,
+    },
     subtaskWrapper: {
         paddingBottom: 12,
         flexDirection: "row",
@@ -109,14 +131,13 @@ const styles = StyleSheet.create({
         opacity: 0.5,
         position: 'relative'
     },
+    delete: {
+        textAlign: 'right'
+    },
     completed: {
         opacity: 0.3
     },
-    addStrike: {
-        textDecorationLine: 'line-through',
-        textDecorationStyle: 'solid'
-    },
-    textInput: {
+    textInputWrapper: {
         width: "90%",
     }
 })

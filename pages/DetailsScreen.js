@@ -22,6 +22,7 @@ const DetailsScreen = ({ route, navigation }) => {
 
     const addSubtask = () => {
         setSubtaskItems([...subtaskItems, null]);
+        setSubtaskItemsStatus([...subtaskItemsStatus, "pending"]);
         setAddTaskShowUp(false);
     };
 
@@ -37,7 +38,6 @@ const DetailsScreen = ({ route, navigation }) => {
         console.log("subtaskItems array " + subtaskItems);
       }, [subtaskItems])
 
-
     const updateSubtaskStatus = (isCompleted, index) => {
         let subtaskItemsStatusCopy = [...subtaskItemsStatus];
         if (isCompleted == true) {
@@ -48,8 +48,18 @@ const DetailsScreen = ({ route, navigation }) => {
         setSubtaskItemsStatus(subtaskItemsStatusCopy);
     }
 
+    const deleteSubtask = (index) => {
+        let subtaskItemsCopy = [...subtaskItems];
+        subtaskItemsCopy.splice(index, 1);
+        setSubtaskItems(subtaskItemsCopy);
+
+        let subtaskItemsStatusCopy = [...subtaskItemsStatus];
+        subtaskItemsStatusCopy.splice(index, 1);
+        setSubtaskItemsStatus(subtaskItemsStatusCopy);
+    }
+
     useEffect(() => {
-        console.log("test " + subtaskItemsStatus);
+        console.log("subtaskItemsStatus " + subtaskItemsStatus);
     }, [subtaskItemsStatus])
 
     const removeInputField = (index) => {
@@ -141,7 +151,7 @@ const DetailsScreen = ({ route, navigation }) => {
                                         forceUpdateCount={forceUpdate} forceUpdate={() => { setForceUpdate(forceUpdate => forceUpdate + 1); }}
                                         numOfSubtasks={subtaskItems.length}
                                         updateSubtaskItemsArray={updateSubtaskItemsArray} addSubtask={addSubtask}
-                                        removeInputField={removeInputField} updateSubtaskStatus={updateSubtaskStatus} />
+                                        removeInputField={removeInputField} updateSubtaskStatus={updateSubtaskStatus} deleteSubtask={deleteSubtask}/>
                                 </View>
                             )
                         })
