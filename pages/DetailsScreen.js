@@ -7,6 +7,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { Modal, Portal, Provider, Button } from 'react-native-paper';
 import Subtask from '../components/Subtask';
 
+import { db } from '../firebase'
+import { collection, deleteDoc, doc, getDocs, setDoc, addDoc, query, orderBy, where, onSnapshot, updateDoc, serverTimestamp } from 'firebase/firestore';
+
 const DetailsScreen = ({ route, navigation }) => {
     const [forceUpdate, setForceUpdate] = useState(0);
 
@@ -97,6 +100,8 @@ const DetailsScreen = ({ route, navigation }) => {
 
                 //Update the task array
                 route.params.setTaskItems(todayTaskItemsCopy);
+
+                route.params.updateTaskItems(route.params.taskItems[route.params.index].id, task);
             }
 
             if (route.params.pageToNavigate == "TOMORROW") {

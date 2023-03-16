@@ -416,6 +416,7 @@ const HomeScreen = ({ navigation }) => {
 
   // MARK: Handle Complete Task
   const completeTask = (taskId, schedule) => {
+    //Today
     if (schedule == laterToday || schedule == thisEvening || schedule == "default") {
       const index = todayTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'TodayTasks', "task" + taskId);
@@ -440,6 +441,7 @@ const HomeScreen = ({ navigation }) => {
       setTodayTaskItems(todayTaskItemsCopy);
     }
 
+    //Tomorrow
     if (schedule == tomorrow) {
       const index = tomorrowTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'TomorrowTasks', "task" + taskId);
@@ -464,6 +466,7 @@ const HomeScreen = ({ navigation }) => {
       setTomorrowTaskItems(tomorrowTaskItemsCopy);
     }
 
+    //Next week
     if (schedule == nextWeek) {
       const index = nextWeekTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'NextWeekTasks', "task" + taskId);
@@ -492,6 +495,7 @@ const HomeScreen = ({ navigation }) => {
 
   // MARK: Handle Delete Task
   const deleteTask = (taskId, schedule) => {
+    //Today
     if (schedule == laterToday || schedule == thisEvening || schedule == "default") {
       const index = todayTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'TodayTasks', "task" + taskId);
@@ -503,6 +507,7 @@ const HomeScreen = ({ navigation }) => {
       setTodayTaskItems(todayTaskItemsCopy);
     }
 
+    //Tomorrow
     if (schedule == tomorrow) {
       const index = tomorrowTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'TomorrowTasks', "task" + taskId);
@@ -514,16 +519,26 @@ const HomeScreen = ({ navigation }) => {
       setTomorrowTaskItems(tomorrowTaskItemsCopy);
     }
 
+    //Next Week
     if (schedule == nextWeek) {
       const index = nextWeekTaskItems.findIndex(task => task.id == taskId);
       const docRef = doc(db, 'Tasks', userID, 'NextWeekTasks', "task" + taskId);
 
-      deleteDoc(docRef); 
+      deleteDoc(docRef);
 
       let nextWeekItemsCopy = [...nextWeekTaskItems];
       nextWeekItemsCopy.splice(index, 1);
       setNextWeekTaskItems(nextWeekItemsCopy);
     }
+  }
+
+  const updateTaskItems = (taskId, newTaskName) => {
+    console.log(taskId);
+    const docRef = doc(db, 'Tasks', userID, 'TodayTasks', "task" + taskId);
+
+    updateDoc(docRef, {
+      taskName: newTaskName
+    });
   }
 
   return (
@@ -553,6 +568,7 @@ const HomeScreen = ({ navigation }) => {
                       index: index,
                       taskItems: section.title == "TODAY" ? todayTaskItems : section.title == "TOMORROW" ? tomorrowTaskItems : nextWeekTaskItems,
                       setTaskItems: section.title == "TODAY" ? setTodayTaskItems : section.title == "TOMORROW" ? setTomorrowTaskItems : setNextWeekTaskItems,
+                      updateTaskItems: updateTaskItems,
                     })
                 }}>
                   <Task text={item.taskName} status={item.status} schedule={getDisplayText(item.schedule)} onPressSquare={() => completeTask(item.id, item.schedule)} onPressCircular={() => deleteTask(item.id, item.schedule)} />
